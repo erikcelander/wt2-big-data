@@ -26,7 +26,8 @@ async def main():
 
         # print(json.dumps(filtered_players, indent=4, sort_keys=True))
 
-
+        with open("filtered_players.json", "w") as outfile:
+            json.dump(filtered_players, outfile)
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
 
