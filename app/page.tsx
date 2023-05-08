@@ -1,10 +1,15 @@
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from './page.module.css'
+import { getFilteredPlayers } from "../data_fetching/get_players"
+
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+
+export default async function Home() {
+  const filteredPlayers = await getFilteredPlayers();
+  //console.log(filteredPlayers)
   return (
     <main className={styles.main}>
       <div className={styles.description}>
@@ -15,7 +20,7 @@ export default function Home() {
       
       </div>
       <div className={styles.grid}>
-        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" className={styles.card}>
+        <a href="https://www.understat.com" className={styles.card}>
           <h3>Data from understat.com &rarr;</h3>
         </a>
        </div>
