@@ -1,14 +1,17 @@
 {
   "name": "assignment-wt2-oauth",
   "version": "1.0.0",
+  "type": "module",
   "description": "As developers, we often face challenges handling large amounts of data where runtime execution or ordinary databases do not meet the requirements. We might also have APIs with basic CRUD operations where we might want to query, aggregate, and visualize the data in other ways than the API intended. This is where the query engine Elasticsearch comes into play. Elasticsearch should not be seen as a database, but as a query engine. The data in Elasticsearch should always be replaceable and be able to be recreated. Elasticsearch and similar query engines allow developers to create indexes from data and use the data in new ways that usually would have taken significant rewriting of applications.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "index-data": "node ./data/index_data.mjs"
   },
   "dependencies": {
+    "@elastic/elasticsearch": "^8.7.0",
     "@types/node": "18.15.13",
     "@types/react": "18.0.37",
     "@types/react-dom": "18.0.11",
@@ -16,10 +19,14 @@
     "eslint-config-next": "13.3.0",
     "next": "13.3.0",
     "react": "18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "18.2.0",
     "typescript": "5.0.4"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "dotenv": "^16.0.3"
+  }
 }
