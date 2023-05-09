@@ -409,7 +409,7 @@ export default function ScatterGraph({ players, graphType }) {
       data: leaguePlayers.map(processData),
       backgroundColor: colors[index],
       pointRadius: 3,
-      pointHoverRadius: 5,
+      pointHoverRadius: 7,
     })
   })
 
