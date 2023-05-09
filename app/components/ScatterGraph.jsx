@@ -22,7 +22,7 @@ export default function ScatterGraph({ players, graphType }) {
 
   const processGraphType = (graphType) => {
     switch (graphType) {
-      case "xG-vs-xA": 
+      case "xG-vs-xA":
         return {
           processData: (player) => {
             return {
@@ -62,126 +62,130 @@ export default function ScatterGraph({ players, graphType }) {
             },
           }
         }
-        case "xG-vs-G":
-          return {
-            processData: (player) => {
-              return {
-                x: parseFloat(player["goals"]),
-                y: parseFloat(player["xG"]),
-                player: player,
-              }
-            },
-            options: {
-              scales: {
-                x: {
-                  type: "linear",
-                  position: "bottom",
-                  title: {
-                    display: true,
-                    text: "Goals",
-                  },
-                },
-                y: {
-                  type: "linear",
-                  title: {
-                    display: true,
-                    text: "xG",
-                  },
-                },
-              },
-              plugins: {
-                tooltip: {
-                  callbacks: {
-                    label: (context) => {
-                      const { datasetIndex, dataIndex } = context
-                      const player = context.chart.data.datasets[datasetIndex].data[dataIndex].player
-                      return `${player.player_name}, Goals: ${player.goals}, xG: ${Math.round(player.xG * 100) / 100}`
-                    },
-                  },
-                },
-              },
+      case "xG-vs-G":
+        return {
+          processData: (player) => {
+            return {
+              x: parseFloat(player["goals"]),
+              y: parseFloat(player["xG"]),
+              player: player,
             }
-          }    
-    case "xA-vs-A":
-      return {
-        processData: (player) => {
-          return {
-            x: parseFloat(player["assists"]),
-            y: parseFloat(player["xA"]),
-            player: player,
-          }
-        },
-        options: {
-          scales: {
-            x: {
-              type: "linear",
-              position: "bottom",
-              title: {
-                display: true,
-                text: "Assists",
-              },
-            },
-            y: {
-              type: "linear",
-              title: {
-                display: true,
-                text: "xA",
-              },
-            },
           },
-          plugins: {
-            tooltip: {
-              callbacks: {
-                label: (context) => {
-                  const { datasetIndex, dataIndex } = context
-                  const player = context.chart.data.datasets[datasetIndex].data[dataIndex].player
-                  return `${player.player_name}, Assists: ${player.assists}, xA: ${Math.round(player.xA * 100) / 100}`
+          options: {
+            scales: {
+              x: {
+                type: "linear",
+                position: "bottom",
+                title: {
+                  display: true,
+                  text: "Goals",
+                },
+              },
+              y: {
+                type: "linear",
+                title: {
+                  display: true,
+                  text: "xG",
                 },
               },
             },
-          },
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: (context) => {
+                    const { datasetIndex, dataIndex } = context
+                    const player = context.chart.data.datasets[datasetIndex].data[dataIndex].player
+                    return `${player.player_name}, Goals: ${player.goals}, xG: ${Math.round(player.xG * 100) / 100}`
+                  },
+                },
+              },
+            },
+          }
         }
-      }
-        case "KeyPass90-vs-xAp90":
-          return {
-            processData: (player) => {
-              return {
-                x: parseFloat(player["A"]),
-                y: parseFloat(player["xG"]),
-                player: player,
-              }
-            },
-            options: {
-              scales: {
-                x: {
-                  type: "linear",
-                  position: "bottom",
-                  title: {
-                    display: true,
-                    text: "xA",
-                  },
-                },
-                y: {
-                  type: "linear",
-                  title: {
-                    display: true,
-                    text: "xG",
-                  },
-                },
-              },
-              plugins: {
-                tooltip: {
-                  callbacks: {
-                    label: (context) => {
-                      const { datasetIndex, dataIndex } = context
-                      const player = context.chart.data.datasets[datasetIndex].data[dataIndex].player
-                      return `${player.player_name}, xG: ${Math.round(player.xG * 100) / 100}, xA: ${Math.round(player.xA * 100) / 100}`
-                    },
-                  },
-                },
-              },
+      case "xA-vs-A":
+        return {
+          processData: (player) => {
+            return {
+              x: parseFloat(player["assists"]),
+              y: parseFloat(player["xA"]),
+              player: player,
             }
+          },
+          options: {
+            scales: {
+              x: {
+                type: "linear",
+                position: "bottom",
+                title: {
+                  display: true,
+                  text: "Assists",
+                },
+              },
+              y: {
+                type: "linear",
+                title: {
+                  display: true,
+                  text: "xA",
+                },
+              },
+            },
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: (context) => {
+                    const { datasetIndex, dataIndex } = context
+                    const player = context.chart.data.datasets[datasetIndex].data[dataIndex].player
+                    return `${player.player_name}, Assists: ${player.assists}, xA: ${Math.round(player.xA * 100) / 100}`
+                  },
+                },
+              },
+            },
           }
+        }
+      case "KeyPass90-vs-xAp90":
+        return {
+          processData: (player) => {
+            const keyPassesPer90 = (parseFloat(player["key_passes"]) / parseFloat(player["time"])) * 90
+            const xAp90 = (parseFloat(player["xA"]) / parseFloat(player["time"])) * 90
+            return {
+              x: keyPassesPer90,
+              y: xAp90,
+              player: player,
+            }
+          },
+          options: {
+            scales: {
+              x: {
+                type: "linear",
+                position: "bottom",
+                title: {
+                  display: true,
+                  text: "Key Passes per 90",
+                },
+              },
+              y: {
+                type: "linear",
+                title: {
+                  display: true,
+                  text: "xA per 90",
+                },
+              },
+            },
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: (context) => {
+                    const { datasetIndex, dataIndex } = context
+                    const player = context.chart.data.datasets[datasetIndex].data[dataIndex].player
+                    const keyPassesPer90 = (parseFloat(player.key_passes) / parseFloat(player.time)) * 90
+                    const xAp90 = (parseFloat(player.xA) / parseFloat(player.time)) * 90
+                    return `${player.player_name}, Key Passes per 90: ${Math.round(keyPassesPer90 * 100) / 100}, xA per 90: ${Math.round(xAp90 * 100) / 100}`
+                  },
+                },
+              },
+            },
+          }
+        }
       default:
         return {
           processData: (player) => {
@@ -223,7 +227,7 @@ export default function ScatterGraph({ players, graphType }) {
           }
         }
     }
- 
+
   }
 
   const { processData, options } = processGraphType()
@@ -242,11 +246,11 @@ export default function ScatterGraph({ players, graphType }) {
   return (
     <div>
       <Scatter data={data} options={options} />
-        <div className={styles.grid}>
-          <a href="https://www.understat.com" className={styles.card}>
-            <h3 className={inter.className} style={{fontSize:16}} >Data from understat.com &rarr;</h3>
-          </a>
-        </div>
+      <div className={styles.grid}>
+        <a href="https://www.understat.com" className={styles.card}>
+          <h3 className={inter.className} style={{ fontSize: 16 }} >Data from understat.com &rarr;</h3>
+        </a>
+      </div>
     </div>
   )
 }
