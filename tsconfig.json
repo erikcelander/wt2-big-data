@@ -35,7 +35,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/components/ScatterGraph.jsx"
-  ],
+, "app/components/GraphComponent.jsx"  ],
   "exclude": [
     "node_modules"
   ]

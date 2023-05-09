@@ -1,7 +1,5 @@
-'use client'
 import { Scatter } from "react-chartjs-2"
 import { Chart, registerables } from 'chart.js'
-import usePlayers from '../hooks/usePlayers'
 
 Chart.register(...registerables)
 

@@ -1,10 +1,12 @@
 import client from "./elasticsearch.js"
-import { getFilteredPlayers } from "./get_data.js"
+import { getData } from "./get_data.js"
+
+
 
 
 export default async function indexData() {
   try {
-    const players = await getFilteredPlayers()
+    const players = await getData()
     const body = []
 
     Object.entries(players).forEach(([league, leaguePlayers]) => {
@@ -21,6 +23,5 @@ export default async function indexData() {
   } catch (error) {
     console.error('Error indexing data:', error)
   }
-
 }
 

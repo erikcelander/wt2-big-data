@@ -1,4 +1,4 @@
-import indexData from '<component>/data/index_data'
+import indexData from '<component>/app/data/index_data'
 import { NextResponse } from 'next/server'
 export async function GET(req: Request, res: NextResponse) {
   try {

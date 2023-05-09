@@ -1,6 +1,5 @@
-
+'use client'
 import { useEffect, useState } from 'react'
-import { getFilteredPlayers } from '../../data/get_data'
 
 export default function usePlayers() {
   const [players, setPlayers] = useState(null)
