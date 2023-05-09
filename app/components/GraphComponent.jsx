@@ -2,9 +2,10 @@
 import dynamic from 'next/dynamic'
 import usePlayers from '../hooks/usePlayers'
 import { Inter } from 'next/font/google'
+import ScatterGraph from './ScatterGraph'
 const inter = Inter({ subsets: ['latin'] })
 
-const DynamicScatterGraph = dynamic(() => import('./ScatterGraph'), { ssr: false })
+//const DynamicScatterGraph = dynamic(() => import('./ScatterGraph'), { ssr: false })
 export default function GraphComponent({ graphType }) {
   const { players, loading } = usePlayers()
 
@@ -12,6 +13,6 @@ export default function GraphComponent({ graphType }) {
     return <div className={inter.className}>Loading...</div>
   }
 
-  return <DynamicScatterGraph players={players} graphType={graphType} />
+  return <ScatterGraph players={players} graphType={graphType} />
 }
 
