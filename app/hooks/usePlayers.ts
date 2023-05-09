@@ -10,9 +10,10 @@ export default function usePlayers() {
       try {
         const response = await fetch('/api/data/get')
         if (!response.ok) {
-          throw new Error('Failed to fetch filtered players')
+          throw new Error('Failed to fetch data')
         }
         const { players } = await response.json()
+        console.log(players)
         setPlayers(players)
 
         const indexResponse = await fetch('/api/data/index')

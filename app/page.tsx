@@ -1,10 +1,5 @@
 import styles from './page.module.css'
-import { getData } from "./data/get_data"
-import ScatterGraph from './components/ScatterGraph'
-import indexData from './data/index_data.js'
-import usePlayers from './hooks/usePlayers'
-import GraphComponent from './components/GraphComponent'
-
+import Link from 'next/link'
 import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
@@ -27,11 +22,13 @@ export default async function Home() {
         </div>
 
         <div className={styles.grid}>
-          <a href="https://www.understat.com" className={styles.card}>
-            <h3 className={inter.className} >Expected goals (xG) and assists (xA) &nbsp; &nbsp; &rarr;</h3>
+        <Link legacyBehavior href="/graphs/xG-vs-xA">
+          <a className={styles.card}>
+            <h3 className={inter.className}>Expected goals (xG) and assists (xA) &nbsp; &rarr;</h3>
           </a>
+        </Link>
 
-          <a href="https://www.understat.com" className={styles.card}>
+          <a href="/graphs/xGxA" className={styles.card}>
             <h3 className={inter.className} >Expected goals (xG) and assists (xA) &rarr;</h3>
           </a>
           

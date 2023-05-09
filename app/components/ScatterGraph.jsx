@@ -5,7 +5,7 @@ import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
 Chart.register(...registerables)
-export default function ScatterGraph({ players }) {
+export default function ScatterGraph({ players, graphType }) {
   const data = {
     datasets: [],
   }
@@ -20,51 +20,107 @@ export default function ScatterGraph({ players }) {
     return acc
   }, {})
 
+  const processData = (player) => {
+    switch (graphType) {
+      case "1":
+        return {
+          x: parseFloat(player["xA"]),
+          y: parseFloat(player["xG"]),
+          player: player,
+        }
+      case "2":
+        return {
+          x: parseFloat(player["xA"]),
+          y: parseFloat(player["xG"]),
+          player: player,
+        }
+        case "3":
+          return {
+            x: parseFloat(player["xA"]),
+            y: parseFloat(player["xG"]),
+            player: player,
+          }
+        case "4":
+          return {
+            x: parseFloat(player["xA"]),
+            y: parseFloat(player["xG"]),
+            player: player,
+          }
+      // Add cases for other graph types here
+      default:
+        return {
+          x: parseFloat(player["xA"]),
+          y: parseFloat(player["xG"]),
+          player: player,
+        }
+    }
+  }
+
+
   Object.entries(playersByLeague).forEach(([league, leaguePlayers], index) => {
     data.datasets.push({
       label: league,
-      data: leaguePlayers.map((player) => ({
-        x: parseFloat(player["xA"]),
-        y: parseFloat(player["xG"]),
-        player: player,
-      })),
+      data: leaguePlayers.map(processData),
       backgroundColor: colors[index],
       pointRadius: 3,
       pointHoverRadius: 5,
     })
   })
 
-  const options = {
-    scales: {
-      x: {
-        type: "linear",
-        position: "bottom",
-        title: {
-          display: true,
-          text: "Open Play xA",
-        },
-      },
-      y: {
-        type: "linear",
-        title: {
-          display: true,
-          text: "xG",
-        },
-      },
-    },
-    plugins: {
-      tooltip: {
-        callbacks: {
-          label: (context) => {
-            const { datasetIndex, dataIndex } = context
-
-            const player = context.chart.data.datasets[datasetIndex].data[dataIndex].player
-            return `${player.player_name}, xG: ${Math.round(player.xG * 100) / 100}, xA: ${Math.round(player.xA * 100) / 100}`
+  const setOptions = () => {
+    switch (graphType) {
+      case "1":
+        return {
+          scales: {
+            x: {
+              type: "linear",
+              position: "bottom",
+              title: {
+                display: true,
+                text: "xA",
+              },
+            },
+            y: {
+              type: "linear",
+              title: {
+                display: true,
+                text: "xG",
+              },
+            },
           },
-        },
-      },
-    },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: (context) => {
+                  const { datasetIndex, dataIndex } = context
+                  const player = context.chart.data.datasets[datasetIndex].data[dataIndex].player
+                  return `${player.player_name}, xG: ${Math.round(player.xG * 100) / 100}, xA: ${Math.round(player.xA * 100) / 100}`
+                },
+              },
+            },
+          },
+        }
+      case "2":
+        return {
+          // Options for the xGxA graph
+        }
+      case "3":
+        return {
+          // Options for the xGxA graph
+        }
+      case "4":
+        return {
+          // Options for the xGxA graph
+        }
+      // Add cases for other graph types here
+      default:
+        return {
+          // Default options
+        }
+    }
   }
+
+  const options = setOptions()
 
   return (
     <div>
