@@ -10,19 +10,26 @@ export async function GET(req: Request, res: NextResponse) {
       index: "players", 
       body: {
         query: {
-          match_all: {}
+          range: {
+            games: {
+              gte: 20
+            }
+          }
         },
       },
-      size: 1500,
+      size: 1800,
     })
 
     const searchResponseBody: any = searchResult
-    const players = searchResponseBody.hits.hits.map((hit: any) => hit._source)
-    console.log(players)
+    const players = searchResponseBody.hits.hits.map((hit: any) => ({
+      ...hit._source,
+      league: hit._source.league.toLowerCase(),
+    }))
+
+
     return NextResponse.json({ players: players }, { status: 200 })
   } catch (error) {
     console.error("Error fetching players:", error)
     return NextResponse.json({ message: "Error fetching players" }, { status: 500 })
   }
-
 }
