@@ -292,6 +292,69 @@ export default function ScatterGraph({ players, graphType }) {
             },
           }
         }
+      case "xGCp90-vs-GCp90":
+        return {
+          processData: (player) => {
+            const xG = parseFloat(player["xG"])
+            const xA = parseFloat(player["xA"])
+            const time = parseFloat(player["time"])
+            const xGp90 = xG / time * 90
+            const xAp90 = xA / time * 90
+            const xGCp90 = xGp90 + xAp90
+            const goals = parseInt(player["goals"])
+            const assists = parseInt(player["assists"])
+            const Gp90 = goals / time * 90
+            const Ap90 = assists / time * 90
+            const GCp90 = Gp90 + Ap90
+            return {
+              x: xGCp90,
+              y: GCp90,
+              player: player,
+            }
+          },
+          options: {
+            scales: {
+              x: {
+                type: "linear",
+                position: "bottom",
+                title: {
+                  display: true,
+                  text: "Expected Goal Contributions per 90 (xGp90 + xAp90)",
+                },
+              },
+              y: {
+                type: "linear",
+                title: {
+                  display: true,
+                  text: "Goal Contributions per 90 (Gp90 + Ap90)",
+                },
+              },
+            },
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: (context) => {
+                    const { datasetIndex, dataIndex } = context
+                    const player = context.chart.data.datasets[datasetIndex].data[dataIndex].player
+                    const xG = parseFloat(player.xG)
+                    const xA = parseFloat(player.xA)
+                    const time = parseFloat(player.time)
+                    const xGp90 = xG / time * 90
+
+                    const xAp90 = xA / time * 90
+                    const xGCp90 = xGp90 + xAp90
+                    const goals = parseInt(player.goals)
+                    const assists = parseInt(player.assists)
+                    const Gp90 = goals / time * 90
+                    const Ap90 = assists / time * 90
+                    const GCp90 = Gp90 + Ap90
+                    return `${player.player_name}, xGCp90: ${Math.round(xGCp90 * 100) / 100}, GCp90: ${Math.round(GCp90 * 100) / 100}`
+                  },
+                },
+              },
+            },
+          }
+        }
       default:
         return {
           processData: (player) => {

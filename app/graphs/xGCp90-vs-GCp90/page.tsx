@@ -3,7 +3,7 @@ import GraphComponent from '<component>/app/components/GraphComponent'
 export default function Page() {
   return (
     <div>
-      <GraphComponent graphType={'xGC-vs-xGCp90'} /> 
+      <GraphComponent graphType={'xGCp90-vs-GCp90'} /> 
     </div>
   )
 }
