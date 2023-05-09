@@ -186,6 +186,60 @@ export default function ScatterGraph({ players, graphType }) {
             },
           }
         }
+      case "xGC-vs-xGCp90":
+        return {
+          processData: (player) => {
+            const xG = parseFloat(player["xG"])
+            const xA = parseFloat(player["xA"])
+            const xGC = xG + xA
+            const time = parseFloat(player["time"])
+            const xGp90 = xG / time * 90
+            const xAp90 = xA / time * 90
+            const xGCp90 = xGp90 + xAp90
+            return {
+              x: xGC,
+              y: xGCp90,
+              player: player,
+            }
+          },
+          options: {
+            scales: {
+              x: {
+                type: "linear",
+                position: "bottom",
+                title: {
+                  display: true,
+                  text: "Expected Goal Contributions (xG + xA)",
+                },
+              },
+              y: {
+                type: "linear",
+                title: {
+                  display: true,
+                  text: "Expected Goal Contributions per 90 (xGp90 + xAp90)",
+                },
+              },
+            },
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: (context) => {
+                    const { datasetIndex, dataIndex } = context
+                    const player = context.chart.data.datasets[datasetIndex].data[dataIndex].player
+                    const xG = parseFloat(player.xG)
+                    const xA = parseFloat(player.xA)
+                    const xGC = xG + xA
+                    const time = parseFloat(player.time)
+                    const xGp90 = xG / time * 90
+                    const xAp90 = xA / time * 90
+                    const xGCp90 = xGp90 + xAp90
+                    return `${player.player_name}, xGC: ${Math.round(xGC * 100) / 100}, xGCp90: ${Math.round(xGCp90 * 100) / 100}`
+                  },
+                },
+              },
+            },
+          }
+        }
       default:
         return {
           processData: (player) => {
@@ -230,7 +284,7 @@ export default function ScatterGraph({ players, graphType }) {
 
   }
 
-  const { processData, options } = processGraphType()
+  const { processData, options } = processGraphType(graphType)
 
 
   Object.entries(playersByLeague).forEach(([league, leaguePlayers], index) => {
