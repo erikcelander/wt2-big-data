@@ -5,19 +5,20 @@ import client from '<component>/app/data/elasticsearch'
 
 export async function GET(req: Request, res: NextResponse) {
   try {
-    console.log("Fetching players")
+
     const searchResult = await client.search({
-      index: "players", // Replace with your index name.
+      index: "players", 
       body: {
         query: {
-          match_all: {}, // Change this query to suit your search requirements.
+          match_all: {}
         },
       },
+      size: 1500,
     })
-    
+
     const searchResponseBody: any = searchResult
     const players = searchResponseBody.hits.hits.map((hit: any) => hit._source)
-
+    console.log(players)
     return NextResponse.json({ players: players }, { status: 200 })
   } catch (error) {
     console.error("Error fetching players:", error)

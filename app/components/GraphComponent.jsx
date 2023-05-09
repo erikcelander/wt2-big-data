@@ -12,7 +12,5 @@ export default function GraphComponent() {
     return <div>Loading...</div>
   }
 
-  console.log(players)
-
   return <DynamicScatterGraph players={players} />
 }

@@ -12,22 +12,24 @@ async def main():
     async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=ssl_context)) as session:
         understat = Understat(session)
         leagues = ["epl", "la_liga", "ligue_1", "bundesliga", "serie_a"]
-        min_games_played = 20
 
-        filtered_players = {}
+        all_players = {}
 
         for league in leagues:
             players = await understat.get_league_players(league, 2022)
-            filtered_players[league] = [player for player in players if int(player["games"]) >= min_games_played]
+            all_players[league] = players
 
-        # Print the total number of players left after filtering
-        total_players = sum(len(players) for players in filtered_players.values())
-        print(f"Total players with 10 or more games played: {total_players}")
+        # Print the total number of players fetched
+        total_players = sum(len(players) for players in all_players.values())
+        print(f"Total players fetched: {total_players}")
+
+        # print(json.dumps(all_players, indent=4, sort_keys=True))
+
 
         # print(json.dumps(filtered_players, indent=4, sort_keys=True))
 
         with open("data.json", "w") as outfile:
-            json.dump(filtered_players, outfile)
+            json.dump(all_players, outfile)
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
 

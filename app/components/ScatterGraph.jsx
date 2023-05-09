@@ -48,6 +48,4 @@ export default function ScatterGraph({players}) {
   
   
     return <Scatter data={data} options={options} />
-  
-
 }
