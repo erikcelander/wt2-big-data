@@ -62,7 +62,127 @@ export default function ScatterGraph({ players, graphType }) {
             },
           }
         }
-      case "2":
+        case "xG-vs-G":
+          return {
+            processData: (player) => {
+              return {
+                x: parseFloat(player["goals"]),
+                y: parseFloat(player["xG"]),
+                player: player,
+              }
+            },
+            options: {
+              scales: {
+                x: {
+                  type: "linear",
+                  position: "bottom",
+                  title: {
+                    display: true,
+                    text: "Goals",
+                  },
+                },
+                y: {
+                  type: "linear",
+                  title: {
+                    display: true,
+                    text: "xG",
+                  },
+                },
+              },
+              plugins: {
+                tooltip: {
+                  callbacks: {
+                    label: (context) => {
+                      const { datasetIndex, dataIndex } = context
+                      const player = context.chart.data.datasets[datasetIndex].data[dataIndex].player
+                      return `${player.player_name}, Goals: ${player.goals}, xG: ${Math.round(player.xG * 100) / 100}`
+                    },
+                  },
+                },
+              },
+            }
+          }    
+    case "xA-vs-A":
+      return {
+        processData: (player) => {
+          return {
+            x: parseFloat(player["assists"]),
+            y: parseFloat(player["xA"]),
+            player: player,
+          }
+        },
+        options: {
+          scales: {
+            x: {
+              type: "linear",
+              position: "bottom",
+              title: {
+                display: true,
+                text: "Assists",
+              },
+            },
+            y: {
+              type: "linear",
+              title: {
+                display: true,
+                text: "xA",
+              },
+            },
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: (context) => {
+                  const { datasetIndex, dataIndex } = context
+                  const player = context.chart.data.datasets[datasetIndex].data[dataIndex].player
+                  return `${player.player_name}, Assists: ${player.assists}, xA: ${Math.round(player.xA * 100) / 100}`
+                },
+              },
+            },
+          },
+        }
+      }
+        case "KeyPass90-vs-xAp90":
+          return {
+            processData: (player) => {
+              return {
+                x: parseFloat(player["xA"]),
+                y: parseFloat(player["xG"]),
+                player: player,
+              }
+            },
+            options: {
+              scales: {
+                x: {
+                  type: "linear",
+                  position: "bottom",
+                  title: {
+                    display: true,
+                    text: "xA",
+                  },
+                },
+                y: {
+                  type: "linear",
+                  title: {
+                    display: true,
+                    text: "xG",
+                  },
+                },
+              },
+              plugins: {
+                tooltip: {
+                  callbacks: {
+                    label: (context) => {
+                      const { datasetIndex, dataIndex } = context
+                      const player = context.chart.data.datasets[datasetIndex].data[dataIndex].player
+                      return `${player.player_name}, xG: ${Math.round(player.xG * 100) / 100}, xA: ${Math.round(player.xA * 100) / 100}`
+                    },
+                  },
+                },
+              },
+            }
+          }
+      default:
         return {
           processData: (player) => {
             return {
@@ -70,34 +190,37 @@ export default function ScatterGraph({ players, graphType }) {
               y: parseFloat(player["xG"]),
               player: player,
             }
+          },
+          options: {
+            scales: {
+              x: {
+                type: "linear",
+                position: "bottom",
+                title: {
+                  display: true,
+                  text: "xA",
+                },
+              },
+              y: {
+                type: "linear",
+                title: {
+                  display: true,
+                  text: "xG",
+                },
+              },
+            },
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: (context) => {
+                    const { datasetIndex, dataIndex } = context
+                    const player = context.chart.data.datasets[datasetIndex].data[dataIndex].player
+                    return `${player.player_name}, xG: ${Math.round(player.xG * 100) / 100}, xA: ${Math.round(player.xA * 100) / 100}`
+                  },
+                },
+              },
+            },
           }
-        }
-        case "3":
-          return {
-            processData: (player) => {
-              return {
-                x: parseFloat(player["xA"]),
-                y: parseFloat(player["xG"]),
-                player: player,
-              }
-            }
-          }
-        case "4":
-          return {
-            processData: (player) => {
-              return {
-                x: parseFloat(player["xA"]),
-                y: parseFloat(player["xG"]),
-                player: player,
-              }
-            }
-          }
-      // Add cases for other graph types here
-      default:
-        return {
-          x: parseFloat(player["xA"]),
-          y: parseFloat(player["xG"]),
-          player: player,
         }
     }
  
