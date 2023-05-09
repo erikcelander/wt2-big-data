@@ -1,11 +1,33 @@
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   padding: 6rem;
   min-height: 100vh;
 }
+
+.content {
+  min-height: 40vh;
+  align-items: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+.assignment {
+  font-size: 0.85rem;
+  max-width: var(--max-width);
+  width: 100%;
+  z-index: 2;
+  font-family: var(--font-mono);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding-bottom: 30px;
+}
+
 
 .description {
   display: inherit;
@@ -17,6 +39,28 @@
   z-index: 2;
   font-family: var(--font-mono);
 }
+
+.description {
+  display: inherit;
+  justify-content: inherit;
+  align-items: inherit;
+  font-size: 0.85rem;
+  max-width: var(--max-width);
+  width: 53%;
+  z-index: 2;
+  font-family: var(--font-mono);
+  text-align: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(25%, auto));
+  max-width: 50%;
+  text-align: center;
+  margin: 30px auto;
+  grid-gap: 35px;
+}
+
 
 .description a {
   display: flex;
@@ -46,12 +90,7 @@
   padding: 0 1rem;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(25%, auto));
-  width: var(--max-width);
-  max-width: 100%;
-}
+
 
 .card {
   padding: 1rem 1.2rem;
@@ -118,7 +157,7 @@
 @media (hover: hover) and (pointer: fine) {
   .card:hover {
     background: rgba(var(--card-rgb), 0.1);
-    border: 1px solid rgba(var(--card-border-rgb), 0.15);
+    border: 1px solid rgba(var(--card-border-rgb), 0.25);
   }
 
   .card:hover span {

@@ -1,5 +1,8 @@
 import { Scatter } from "react-chartjs-2"
 import { Chart, registerables } from 'chart.js'
+import styles from './ScatterGraph.module.css'
+import { Inter } from 'next/font/google'
+const inter = Inter({ subsets: ['latin'] })
 
 Chart.register(...registerables)
 export default function ScatterGraph({ players }) {
@@ -63,5 +66,14 @@ export default function ScatterGraph({ players }) {
     },
   }
 
-  return <Scatter data={data} options={options} />
+  return (
+    <div>
+      <Scatter data={data} options={options} />
+        <div className={styles.grid}>
+          <a href="https://www.understat.com" className={styles.card}>
+            <h3 className={inter.className} style={{fontSize:16}} >Data from understat.com &rarr;</h3>
+          </a>
+        </div>
+    </div>
+  )
 }
