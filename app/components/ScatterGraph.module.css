@@ -1,8 +1,8 @@
 
 .grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(25%, auto));
-  width: var(--max-width);
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
   max-width: 100%;
 }
 

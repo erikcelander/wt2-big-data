@@ -1,6 +1,7 @@
 import { Scatter } from "react-chartjs-2"
 import { Chart, registerables } from 'chart.js'
 import styles from './ScatterGraph.module.css'
+import Link from 'next/link'
 import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
@@ -415,7 +416,12 @@ export default function ScatterGraph({ players, graphType }) {
   return (
     <div>
       <Scatter data={data} options={options} />
-      <div className={styles.grid}>
+      
+      <div className={styles.grid} style={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
+        <Link href="/" className={styles.card}>
+          <h3 className={inter.className} style={{ fontSize: 16 }} >Change graph &rarr;</h3>
+        </Link>
+
         <a href="https://www.understat.com" className={styles.card}>
           <h3 className={inter.className} style={{ fontSize: 16 }} >Data from understat.com &rarr;</h3>
         </a>

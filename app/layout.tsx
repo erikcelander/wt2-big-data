@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import './globals.css'
 import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
@@ -16,10 +17,12 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <div className={inter.className} style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-          <div style={{marginTop: 2, marginLeft: 7, fontSize: 13}}>
+          <div style={{marginTop: 2, marginLeft: 7, fontSize: 13, opacity: '0.5'}}>
             Erik Kroon Celander, ek223ur
           </div>
-          <div style={{marginTop: 2, marginRight: 7, fontSize: 13}}>
+
+
+          <div style={{marginTop: 2, marginRight: 7, fontSize: 13, opacity: '0.5'}}>
             1DV027, Linnéuniversitetet
           </div>
         </div>
