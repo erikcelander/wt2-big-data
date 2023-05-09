@@ -240,6 +240,58 @@ export default function ScatterGraph({ players, graphType }) {
             },
           }
         }
+      case "xGC-vs-GC":
+        return {
+          processData: (player) => {
+            const xG = parseFloat(player["xG"])
+            const xA = parseFloat(player["xA"])
+            const xGC = xG + xA
+            const goals = parseInt(player["goals"])
+            const assists = parseInt(player["assists"])
+            const GC = goals + assists
+            return {
+              x: xGC,
+              y: GC,
+              player: player,
+            }
+          },
+          options: {
+            scales: {
+              x: {
+                type: "linear",
+                position: "bottom",
+                title: {
+                  display: true,
+                  text: "Expected Goal Contributions (xG + xA)",
+                },
+              },
+              y: {
+                type: "linear",
+                title: {
+                  display: true,
+                  text: "Goal Contributions (Goals + Assists)",
+                },
+              },
+            },
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: (context) => {
+                    const { datasetIndex, dataIndex } = context
+                    const player = context.chart.data.datasets[datasetIndex].data[dataIndex].player
+                    const xG = parseFloat(player.xG)
+                    const xA = parseFloat(player.xA)
+                    const xGC = xG + xA
+                    const goals = parseInt(player.goals)
+                    const assists = parseInt(player.assists)
+                    const GC = goals + assists
+                    return `${player.player_name}, xGC: ${Math.round(xGC * 100) / 100}, GC: ${GC}`
+                  },
+                },
+              },
+            },
+          }
+        }
       default:
         return {
           processData: (player) => {
