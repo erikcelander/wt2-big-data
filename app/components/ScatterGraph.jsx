@@ -20,7 +20,7 @@ export default function ScatterGraph({ players, graphType }) {
     return acc
   }, {})
 
-  const processGraphType = (player) => {
+  const processGraphType = (graphType) => {
     switch (graphType) {
       case "xG-vs-xA": 
         return {
@@ -146,7 +146,7 @@ export default function ScatterGraph({ players, graphType }) {
           return {
             processData: (player) => {
               return {
-                x: parseFloat(player["xA"]),
+                x: parseFloat(player["A"]),
                 y: parseFloat(player["xG"]),
                 player: player,
               }
