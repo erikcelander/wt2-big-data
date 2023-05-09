@@ -39,6 +39,13 @@
   font-family: var(--font-mono);
 }
 
+.graph {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 40px 0px 20px 0px;
+  padding: 0 1rem;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(25%, auto));

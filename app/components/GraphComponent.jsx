@@ -4,7 +4,6 @@ import dynamic from 'next/dynamic'
 import usePlayers from '../hooks/usePlayers'
 
 const DynamicScatterGraph = dynamic(() => import('./ScatterGraph'), { ssr: false })
-
 export default function GraphComponent() {
   const { players, loading } = usePlayers()
 
@@ -14,3 +13,4 @@ export default function GraphComponent() {
 
   return <DynamicScatterGraph players={players} />
 }
+
