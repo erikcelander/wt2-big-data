@@ -1,13 +1,15 @@
 import { NextResponse } from 'next/server'
-import { getData as getData } from '<component>/app/data/get_data'
 import client from '<component>/app/data/elasticsearch'
 
-
-export async function GET(req: Request, res: NextResponse) {
+/**
+ * Fetches players data from Elasticsearch.
+ * 
+ * @returns An array of players with player data as properties.
+ */
+export async function GET() {
   try {
-
     const searchResult = await client.search({
-      index: "players", 
+      index: "players",
       body: {
         query: {
           range: {
@@ -17,11 +19,11 @@ export async function GET(req: Request, res: NextResponse) {
           }
         },
       },
-      size: 1800,
+      size: 1500,
     })
 
-    const searchResponseBody: any = searchResult
-    const players = searchResponseBody.hits.hits.map((hit: any) => ({
+
+    const players = searchResult.hits.hits.map((hit: any) => ({
       ...hit._source,
       league: hit._source.league.toLowerCase(),
     }))

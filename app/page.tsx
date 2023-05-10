@@ -6,10 +6,6 @@ const inter = Inter({ subsets: ['latin'] })
 
 
 export default async function Home() {
-  /*<div className={styles.graph}>
-          <GraphComponent />
-        </div>*/
-
   return (
     <main className={styles.main}>
       <div className={styles.assignment}>

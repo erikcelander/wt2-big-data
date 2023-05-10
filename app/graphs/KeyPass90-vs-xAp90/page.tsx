@@ -1,4 +1,4 @@
-import GraphComponent from '<component>/app/components/GraphComponent'
+import GraphComponent from '<component>/app/components/GraphComponent/GraphComponent'
 
 export default function Page() {
   return (

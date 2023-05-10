@@ -1,6 +1,10 @@
 'use client'
 import { useEffect, useState } from 'react'
 
+/**
+ * A custom React Hook that fetches and indexes player data from an API endpoint.
+ * @returns {Object} An object with `players` and `loading` properties.
+ */
 export default function usePlayers() {
   const [players, setPlayers] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -13,13 +17,9 @@ export default function usePlayers() {
           throw new Error('Failed to fetch data')
         }
         const { players } = await response.json()
-        console.log(players)
         setPlayers(players)
 
-        const indexResponse = await fetch('/api/data/index')
-        if (!indexResponse.ok) {
-          throw new Error('Failed to index data')
-        }
+    
 
       } catch (error) {
         console.error('Error fetching and indexing data:', error)

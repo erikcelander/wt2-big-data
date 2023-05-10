@@ -1,6 +1,10 @@
-import client from "./elasticsearch.js"
-import { getData } from "./get_data.js"
+import client from "../elasticsearch.js"
+import { getData } from "../get_data.js"
 
+/**
+ * Deletes all documents in the "players" index and reindexes the data from "data.json"
+ * @returns {Promise<void>}
+ */
 export default async function indexData() {
   try {
     await client.deleteByQuery({
